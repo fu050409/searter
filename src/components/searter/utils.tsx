@@ -1,12 +1,3 @@
-/**
- * 排座算法工具模块
- * 实现成绩互补的座位分配算法
- */
-
-/**
- * 文件解析工具模块
- * 负责解析 xlsx 文件并提取学生数据
- */
 import * as XLSX from 'xlsx';
 import type { ArrangementResult, Seat, Student, Table } from './types';
 
