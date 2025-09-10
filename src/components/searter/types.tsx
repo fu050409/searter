@@ -1,12 +1,37 @@
 /**
  * 学生数据类型定义
- * 包含学生的基本信息和成绩
+ * 包含学生的基本信息和各科成绩
  */
 export interface Student {
     id: string;
     name: string;
-    score: number;
+    scores: {
+        [subject: string]: number; // 支持多科成绩，如 { '数学': 85, '英语': 78, '语文': 92 }
+    };
+    totalScore: number; // 总分
+    averageScore: number; // 平均分
     originalIndex: number;
+    level: 'excellent' | 'good' | 'average' | 'poor'; // 学生水平等级
+}
+
+/**
+ * 科目成绩分析
+ */
+export interface SubjectAnalysis {
+    subject: string;
+    average: number;
+    excellent: number; // 优秀线
+    poor: number; // 及格线
+}
+
+/**
+ * 学生配对信息
+ */
+export interface StudentPair {
+    student1: Student;
+    student2: Student;
+    compatibilityScore: number; // 互补性得分
+    subjectComplements: { [subject: string]: number }; // 各科互补度
 }
 
 /**
@@ -32,6 +57,15 @@ export interface Table {
 }
 
 /**
+ * 教室配置类型定义
+ */
+export interface ClassroomConfig {
+    groups: number; // 组数（列数）
+    rows: number; // 排数（行数）
+    seatsPerGroup: number; // 每组人数（通常为2人）
+}
+
+/**
  * 排座结果类型定义
  */
 export interface ArrangementResult {
@@ -39,4 +73,5 @@ export interface ArrangementResult {
     totalStudents: number;
     averageScore: number;
     scoreVariance: number;
+    classroomConfig: ClassroomConfig;
 }
