@@ -4,10 +4,9 @@
  */
 
 import { ChevronDown, ChevronUp, Download, FileText, Info } from 'lucide-react';
-import type React from 'react';
 import { useState } from 'react';
 
-const ExcelFormatGuide: React.FC = () => {
+export function ExcelFormatGuide() {
     const [isExpanded, setIsExpanded] = useState(false);
 
     // 示例数据
@@ -218,6 +217,4 @@ const ExcelFormatGuide: React.FC = () => {
             )}
         </div>
     );
-};
-
-export default ExcelFormatGuide;
+}

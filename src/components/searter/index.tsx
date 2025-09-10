@@ -15,12 +15,12 @@ import {
 } from 'lucide-react';
 import type React from 'react';
 import { useRef } from 'react';
-import ExcelFormatGuide from '../guide';
+import { ExcelFormatGuide } from '../guide';
 import { useSeatArrangementState } from './hooks';
 import SeatLayoutGrid from './layout';
 import type { ArrangementResult } from './types';
 
-const SeatArrangement: React.FC = () => {
+export function SeatArrangement() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const {
         students,
@@ -577,6 +577,4 @@ const SeatArrangement: React.FC = () => {
             )}
         </div>
     );
-};
-
-export default SeatArrangement;
+}

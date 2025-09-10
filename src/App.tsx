@@ -1,7 +1,6 @@
-import type React from 'react';
-import SeatArrangement from './components/searter';
+import { SeatArrangement } from './components/searter';
 
-const App: React.FC = () => {
+export function App() {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="container mx-auto py-8">
@@ -12,6 +11,6 @@ const App: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default App;
