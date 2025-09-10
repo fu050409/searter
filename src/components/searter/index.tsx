@@ -147,7 +147,7 @@ const SeatArrangement: React.FC = () => {
                     <button
                         type="button"
                         onClick={triggerFileUpload}
-                        className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 cursor-pointer transition-colors"
+                        className="w-full border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 cursor-pointer transition-colors"
                     >
                         <Upload
                             className="mx-auto mb-4 text-gray-400"

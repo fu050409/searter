@@ -41,7 +41,7 @@ const ExcelFormatGuide: React.FC = () => {
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <button
                 type="button"
-                className="flex items-center justify-between cursor-pointer"
+                className="w-full flex items-center justify-between cursor-pointer"
                 onClick={() => setIsExpanded(!isExpanded)}
             >
                 <div className="flex items-center">
