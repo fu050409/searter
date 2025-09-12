@@ -436,6 +436,14 @@ export function SeatArrangement() {
                     {/* 座位布局可视化 */}
                     <div className="mb-8">
                         <SeatLayoutGrid
+                            result={arrangementResult}
+                            subjects={subjects}
+                        />
+                    </div>
+
+                    {/* 离屏渲染 */}
+                    <div className="fixed z-[-1] left-0 top-0 size-full">
+                        <SeatLayoutGrid
                             ref={seatLayoutRef}
                             result={arrangementResult}
                             subjects={subjects}
