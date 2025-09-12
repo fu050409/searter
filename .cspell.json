@@ -4,6 +4,9 @@
         "officedocument",
         "openxmlformats",
         "searter",
-        "spreadsheetml"
+        "snapdom",
+        "spreadsheetml",
+        "trae",
+        "zumer"
     ]
 }

@@ -3,6 +3,7 @@
  * 负责整体 UI 渲染和用户交互
  */
 
+import { snapdom } from '@zumer/snapdom';
 import {
     Award,
     BarChart3,
@@ -14,14 +15,14 @@ import {
     Users,
 } from 'lucide-react';
 import type React from 'react';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { ExcelFormatGuide } from '../guide';
 import { useSeatArrangementState } from './hooks';
 import SeatLayoutGrid from './layout';
-import type { ArrangementResult } from './types';
 
 export function SeatArrangement() {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const seatLayoutRef = useRef<HTMLDivElement>(null);
     const {
         students,
         subjects,
@@ -46,53 +47,16 @@ export function SeatArrangement() {
         event.target.value = '';
     };
 
-    const triggerFileUpload = () => {
+    const triggerFileUpload = useCallback(() => {
         fileInputRef.current?.click();
-    };
+    }, []);
 
-    const downloadResult = () => {
-        if (!arrangementResult) return;
+    const downloadResult = useCallback(async () => {
+        if (!arrangementResult || !seatLayoutRef.current) return;
 
-        const content = generateResultText(arrangementResult);
-        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = '排座结果.txt';
-        a.click();
-        URL.revokeObjectURL(url);
-    };
-
-    const generateResultText = (result: ArrangementResult) => {
-        let content = '智能排座结果（多科成绩优势互补）\n';
-        content += '==========================================\n\n';
-        content += `教室配置: ${result.classroomConfig.rows}排 × ${result.classroomConfig.groups}组，每组${result.classroomConfig.seatsPerGroup}人\n`;
-        content += `总学生数: ${result.totalStudents}\n`;
-        content += `平均成绩: ${result.averageScore.toFixed(2)}\n`;
-        content += `配对质量方差: ${result.scoreVariance.toFixed(2)}\n\n`;
-        content += `科目: ${subjects.join(', ')}\n\n`;
-
-        result.tables.forEach((table, index) => {
-            const groupRow =
-                Math.floor(index / result.classroomConfig.groups) + 1;
-            const groupCol = (index % result.classroomConfig.groups) + 1;
-            content += `第${groupRow}排第${groupCol}组 (总分: ${table.totalScore.toFixed(2)}, 平均分: ${table.averageScore.toFixed(2)}):\n`;
-            table.seats.forEach((seat, seatIndex) => {
-                if (seat.student) {
-                    const scoresText = subjects
-                        .map(
-                            (subject) =>
-                                `${subject}: ${seat.student?.scores[subject] || 'N/A'}`,
-                        )
-                        .join(', ');
-                    content += `  座位${seatIndex + 1}: ${seat.student.name} (${scoresText}) [${seat.student.level}]\n`;
-                }
-            });
-            content += '\n';
-        });
-
-        return content;
-    };
+        const snap = await snapdom(seatLayoutRef.current);
+        snap.download({ format: 'png', filename: '排座结果' });
+    }, [arrangementResult]);
 
     const getLevelColor = (level: string) => {
         switch (level) {
@@ -472,6 +436,7 @@ export function SeatArrangement() {
                     {/* 座位布局可视化 */}
                     <div className="mb-8">
                         <SeatLayoutGrid
+                            ref={seatLayoutRef}
                             result={arrangementResult}
                             subjects={subjects}
                         />

@@ -4,7 +4,7 @@
  */
 import type { ArrangementResult, Student } from './types';
 
-interface SeatLayoutGridProps {
+interface SeatLayoutGridProps extends React.ComponentPropsWithRef<'div'> {
     result: ArrangementResult;
     subjects: string[];
 }
@@ -17,7 +17,11 @@ interface GridItems {
     seatIndex: number;
 }
 
-export function SeatLayoutGrid({ result, subjects }: SeatLayoutGridProps) {
+export function SeatLayoutGrid({
+    result,
+    subjects,
+    ...props
+}: SeatLayoutGridProps) {
     const { classroomConfig, tables } = result;
 
     // 创建座位网格数据结构
@@ -107,7 +111,7 @@ export function SeatLayoutGrid({ result, subjects }: SeatLayoutGridProps) {
     };
 
     return (
-        <div className="w-full">
+        <div className="w-full" {...props}>
             <div className="mb-4 text-center">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">
                     教室座位布局图
